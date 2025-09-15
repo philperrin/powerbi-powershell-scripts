@@ -103,7 +103,7 @@ $param_values = foreach ($roww in $dataset_obj2) {
         p_value = $parameters.value
         }
 }
-
+Get-Date -Format "g"
 Write-Host "Done!"
 
 
