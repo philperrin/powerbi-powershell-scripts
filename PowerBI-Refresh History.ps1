@@ -1,4 +1,6 @@
-﻿Connect-PowerBIServiceAccount
+Set-Location -Path $PSScriptRoot
+
+Connect-PowerBIServiceAccount
 
 Write-Host "Gathering workspaces"
 $allGroups = Invoke-PowerBIRestMethod -Url 'groups' -Method Get
