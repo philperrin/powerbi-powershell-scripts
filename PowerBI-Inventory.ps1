@@ -17,6 +17,32 @@
 #
 #--------------------------------------------------------------------------------------------------
 
+# Set the run directory for output files to the same as the script directory.
+Set-Location -Path $PSScriptRoot
+
+# Get the capacities
+$capacities = Invoke-PowerBIRestMethod -Url 'capacities' -Method Get | ConvertFrom-Json
+$capacities = foreach ($row in $capacities.value){
+    [PSCustomObject] @{
+    c_id = $row.id
+    c_name = $row.displayName
+    c_sku = $row.sku
+    }
+}
+$capacities | Select-Object -Property c_id,c_name,c_sku | Export-Csv -Path ".\capacities.csv"  -NoTypeInformation -Force
+
+# Get the gateways
+$gateways.value = Invoke-PowerBIRestMethod -Url 'gateways' -Method Get | ConvertFrom-Json
+$gateways = foreach ($row in $gateways.value){
+    [PSCustomObject] @{
+    g_id = $row.id
+    g_name = $row.name
+    }
+}
+$gateways | Select-Object -Property g_id,g_name | Export-Csv -Path ".\gateways.csv"  -NoTypeInformation -Force
+
+
+
 # Parameters:
 # Diagnostic mode: $false = deletes all temp files; $true = keeps all temp files. Default is $false.
 $diagnostic = $false

@@ -74,6 +74,7 @@ $dataset_obj2 = $dataset_obj2 | LeftJoin $w_data -On w_id
 
 $ds_o2_count= $dataset_obj2.count
 
+$dataset_obj2 | Select-Object -Property d_id,d_name,w_id,isRefreshable | Export-Csv -Path ".\refreshlookup.csv"  -NoTypeInformation -Force
 
 
 
@@ -86,8 +87,8 @@ $ds_count = $ds_list.Count
 Write-Host "Getting refresh schedule info from each dataset ($ds_count)."
 # Using the dataset id and the group id, pull the refresh schedule on each dataset that is refreshable.
 $allrefreshes = foreach ($row in $ds_list) {
-    $workspaceid = $row.ws_id
-    $datasetid = $row.ds_id
+    $workspaceid = $row.w_id
+    $datasetid = $row.d_id
 
     $refreshes = Invoke-PowerBIRestMethod -Url "groups/$workspaceid/datasets/$datasetid/refreshes" -Method Get | ConvertFrom-Json
 

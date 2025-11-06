@@ -1,4 +1,5 @@
 ﻿
+Set-Location -Path $PSScriptRoot
 
 Connect-PowerBIServiceAccount
 
